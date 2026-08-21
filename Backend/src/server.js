@@ -9,12 +9,13 @@ import { clerkMiddleware } from "@clerk/express"
 
 const app = express();
 const PORT = process.env.PORT;
+const FRONTEND_URI = process.env.FRONTEND_URI;
 
 // Middilewares
 
 app.use(express.json());
 
-app.use(cors())
+app.use(cors({origin:FRONTEND_URI,credentials:true}))
 
 app.use(clerkMiddleware());
 
