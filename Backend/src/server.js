@@ -5,11 +5,17 @@ const dotenv = require('dotenv').config({path:"../.env"});
 
 import cors from "cors"
 
+const fs = require('fs');
+
+const path = require('path');
+
 import { clerkMiddleware } from "@clerk/express"
 
 const app = express();
 const PORT = process.env.PORT;
 const FRONTEND_URI = process.env.FRONTEND_URI;
+
+const publicDir = patth.join(process.cwd(),"public");
 
 // Middilewares
 
@@ -24,6 +30,16 @@ app.use(clerkMiddleware());
 app.get("/health",(req,res)=>{
     res.status(200).json({message:"yes its upp"})
 })
+// of the public directory exists, serve static files
+// this is for the production build 
+
+if(fs.existsSync(publicDir)){
+    app.use(express.static(publicDir));
+
+    app.get("/{*}",(req,res)=>{
+        res.sendFile(path.join(publicDir,"index.html"),(err)=>next(err));
+    });
+}
 
 
 app.listen(PORT,()=>{
