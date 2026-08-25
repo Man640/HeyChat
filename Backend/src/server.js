@@ -1,21 +1,22 @@
 const express = require('express');
 const { connectDB } = require('./lib/db');
 
-const dotenv = require('dotenv').config({path:"../.env"});
+const dotenv = require('dotenv').config({ path: ".env" });
 
-import cors from "cors"
+const cors = require("cors");
+
 
 const fs = require('fs');
 
 const path = require('path');
 
-import { clerkMiddleware } from "@clerk/express"
+const { clerkMiddleware } = require("@clerk/express");
 
 const app = express();
 const PORT = process.env.PORT;
 const FRONTEND_URI = process.env.FRONTEND_URI;
 
-const publicDir = patth.join(process.cwd(),"public");
+const publicDir = path.join(process.cwd(),"public");
 
 // Middilewares
 
