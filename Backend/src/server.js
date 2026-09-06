@@ -18,6 +18,9 @@ const FRONTEND_URI = process.env.FRONTEND_URI;
 
 const publicDir = path.join(process.cwd(),"public");
 
+// its imp that you dont parse the webhook event data,its should be in the raw format,otherwise the signature verification will fail
+app.use("/api/webhooks/clerk",express.raw({type: 'application/json'}),clerkWebhook)
+
 // Middilewares
 
 app.use(express.json());
