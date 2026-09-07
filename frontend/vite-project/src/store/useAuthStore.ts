@@ -1,10 +1,28 @@
 import { create } from "zustand";
 import { axiosInstance } from "../lib/axios";
-import { io } from "socket.io-client";
+import { io, type Socket } from "socket.io-client";
 
-const BASE_URL = import.meta.env.MODE === "development" ? "http://localhost:3000" : "/";
+const BASE_URL =
+  import.meta.env.MODE === "development" ? "http://localhost:3000" : "/";
 
-export const useAuthStore = create((set, get) => ({
+interface AuthUser {
+  _id: string;
+  [key: string]: unknown;
+}
+
+interface AuthState {
+  authUser: AuthUser | null;
+  isCheckingAuth: boolean;
+  onlineUsers: string[];
+  socket: Socket | null;
+
+  checkAuth: () => Promise<void>;
+  clearAuth: () => void;
+  connectSocket: (user: AuthUser) => void;
+  disconnectSocket: () => void;
+}
+
+export const useAuthStore = create<AuthState>((set, get) => ({
   authUser: null,
   isCheckingAuth: true,
   onlineUsers: [],
@@ -27,25 +45,36 @@ export const useAuthStore = create((set, get) => ({
   },
 
   clearAuth: () => {
-    set({ authUser: null, isCheckingAuth: false, onlineUsers: [] });
+    set({
+      authUser: null,
+      isCheckingAuth: false,
+      onlineUsers: [],
+    });
+
     get().disconnectSocket();
   },
 
   connectSocket: (user) => {
     if (!user || get().socket?.connected) return;
 
-    const socket = io(BASE_URL, { query: { userId: user._id } });
+    const socket = io(BASE_URL, {
+      query: { userId: user._id },
+    });
 
     set({ socket });
 
-    socket.on("getOnlineUsers", (userIds) => {
+    socket.on("getOnlineUsers", (userIds: string[]) => {
       set({ onlineUsers: userIds });
     });
   },
 
   disconnectSocket: () => {
     const socket = get().socket;
-    if (socket?.connected) socket.disconnect();
+
+    if (socket?.connected) {
+      socket.disconnect();
+    }
+
     set({ socket: null });
   },
 }));
