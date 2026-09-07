@@ -1,4 +1,5 @@
 import { Avatar, Button } from "@heroui/react";
+import type { ReactNode } from "react";
 import {
   ChevronLeftIcon,
   Volume2Icon,
@@ -15,7 +16,7 @@ import { WallpaperPicker } from "../WallpaperPicker";
 import { useChatStore } from "../../store/useChatStore";
 import { useSelectedConversation } from "../../hooks/useSelectedConversation";
 
-export function ChatHeader(): JSX.Element {
+export function ChatHeader(): ReactNode {
   const isSoundEnabled = useChatStore((state) => state.isSoundEnabled);
   const setActiveConversationId = useChatStore(
     (state) => state.setActiveConversationId

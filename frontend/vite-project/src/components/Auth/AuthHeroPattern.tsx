@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 const gridStyle = (color: string): React.CSSProperties => ({
   backgroundImage: [
     `linear-gradient(${color} 1px, transparent 1px)`,
@@ -9,7 +11,7 @@ const gridStyle = (color: string): React.CSSProperties => ({
 const darkGridMask =
   "radial-gradient(ellipse 68% 58% at 50% 48%, #000 8%, #000 42%, transparent 78%)";
 
-export function AuthHeroPattern(): JSX.Element {
+export function AuthHeroPattern(): ReactNode {
   return (
     <>
       <div

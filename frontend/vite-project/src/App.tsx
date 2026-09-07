@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router";
 import { useAuth } from "@clerk/react";
 import { Toaster } from "react-hot-toast";
+import type { ReactNode } from "react";
 
 import { WallpaperProvider } from "./context/WallpaperContext";
 import { ThemeProvider } from "./context/ThemeContext";
@@ -10,7 +11,7 @@ import AuthPage from "./pages/AuthPage";
 import PageLoader from "./components/PageLoader";
 import { useAuthStore } from "./store/useAuthStore";
 
-function App(): JSX.Element {
+function App(): ReactNode {
   const { isSignedIn, isLoaded } = useAuth();
 
   // Select individual Zustand state/actions for better performance

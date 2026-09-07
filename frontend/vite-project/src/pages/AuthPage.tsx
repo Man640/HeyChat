@@ -2,8 +2,9 @@ import { AuthActionPanel } from "../components/Auth/AuthActionpanel";
 import AuthHeader from "../components/Auth/AuthHeader";
 import { AuthHeroPanel } from "../components/Auth/AuthHeroPanel";
 import { useWallpaper } from "../context/wallpaper";
+import type { ReactNode } from "react";
 
-function AuthPage(): JSX.Element {
+function AuthPage(): ReactNode {
   const { frameStyle } = useWallpaper();
 
   return (

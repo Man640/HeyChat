@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, type ReactNode } from "react";
 import { useWallpaper } from "../context/wallpaper";
 import { useChatStore } from "../store/useChatStore";
 import { useSelectedConversation } from "../hooks/useSelectedConversation";
@@ -7,7 +7,7 @@ import { ChatHeader } from "../components/Chat/ChatHeader";
 import { MessageList } from "../components/Chat/MessageList";
 import { ChatComposer } from "../components/Chat/ChatComposer";
 
-function ChatPage(): JSX.Element {
+function ChatPage(): ReactNode {
   const { frameStyle } = useWallpaper();
 
   const getConversations = useChatStore((state) => state.getConversations);

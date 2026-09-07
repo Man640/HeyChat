@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { APP_NAME } from "../AppLogo";
 import { AuthHeroPattern } from "./AuthHeroPattern";
 
@@ -15,7 +16,7 @@ const heroImageClassName = [
   "sm:w-[min(88%,21rem)] md:max-h-[min(52vh,440px)] md:w-[min(90%,22rem)]",
 ].join(" ");
 
-export function AuthHeroPanel(): JSX.Element {
+export function AuthHeroPanel(): ReactNode {
   return (
     <section className={heroPanelClassName}>
       <AuthHeroPattern />

@@ -7,6 +7,7 @@ import { UserButton } from "@clerk/react";
 import { SearchField, Tabs } from "@heroui/react";
 import { MessageSquareIcon, UsersIcon } from "lucide-react";
 import { ConversationRow } from "./ConversationRow";
+import type { ReactNode } from "react";
 
 interface User {
   _id: string;
@@ -52,7 +53,7 @@ function mapUserForList(
   };
 }
 
-function ChatSidebar(): JSX.Element {
+function ChatSidebar(): ReactNode {
   const conversations = useChatStore((state) => state.conversations);
   const users = useChatStore((state) => state.users);
 
