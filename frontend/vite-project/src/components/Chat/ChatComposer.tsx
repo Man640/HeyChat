@@ -30,7 +30,9 @@ export function ChatComposer() {
   };
 
   const handleSend = async (): Promise<void> => {
-    const didSendMessage = await sendTextMessage(activeConversationId);
+     if (!activeConversationId) return;
+
+  const didSendMessage = await sendTextMessage(activeConversationId);
 
     if (didSendMessage) {
       playSoundIfEnabled();
@@ -52,7 +54,8 @@ export function ChatComposer() {
     // Reset the input so the same file can be selected again.
     event.target.value = "";
 
-    if (!file) return;
+    if (!file || !activeConversationId) return;
+
 
     const didSendMessage = await sendMediaMessage({
       conversationId: activeConversationId,

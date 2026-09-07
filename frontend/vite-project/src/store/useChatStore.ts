@@ -315,7 +315,7 @@ export const useChatStore = create<ChatState>()(
       },
     }),
     {
-      name: "imessage-storage",
+      name: "HeyChat-storage",
 
       partialize: (state) => ({
         isSoundEnabled: state.isSoundEnabled,
