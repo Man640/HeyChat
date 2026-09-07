@@ -1,22 +1,68 @@
-import './App.css'
-import { Show, SignInButton, SignUpButton, UserButton } from '@clerk/react'
+import { useEffect } from "react";
+import { Navigate, Route, Routes } from "react-router";
+import { useAuth } from "@clerk/react";
+import { Toaster } from "react-hot-toast";
 
-function App() {
+import { WallpaperProvider } from "./context/WallpaperContext";
+import { ThemeProvider } from "./context/ThemeContext";
+import ChatPage from "./pages/ChatPage";
+import AuthPage from "./pages/AuthPage";
+import PageLoader from "./components/PageLoader";
+import { useAuthStore } from "./store/useAuthStore";
+
+function App(): JSX.Element {
+  const { isSignedIn, isLoaded } = useAuth();
+
+  // Select individual Zustand state/actions for better performance
+  const clearAuth = useAuthStore((state) => state.clearAuth);
+  const checkAuth = useAuthStore((state) => state.checkAuth);
+  const isCheckingAuth = useAuthStore((state) => state.isCheckingAuth);
+
+  useEffect(() => {
+    if (!isLoaded) return;
+
+    if (isSignedIn) {
+      checkAuth();
+    } else {
+      clearAuth();
+    }
+  }, [checkAuth, clearAuth, isLoaded, isSignedIn]);
+
+  if (!isLoaded || (isSignedIn && isCheckingAuth)) {
+    return <PageLoader />;
+  }
+
   return (
-    <>
-    <h1>My App</h1>
-      <header>
-        <Show when="signed-out">
-          <SignInButton mode="modal" />
-          <SignUpButton mode="modal" />
-        </Show>
+    <ThemeProvider>
+      <WallpaperProvider>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              isSignedIn ? (
+                <ChatPage />
+              ) : (
+                <Navigate to="/auth" replace />
+              )
+            }
+          />
 
-        <Show when="signed-in">
-          <UserButton />
-        </Show>
-      </header>
-    </>
-  )
+          <Route
+            path="/auth"
+            element={
+              !isSignedIn ? (
+                <AuthPage />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
+          />
+        </Routes>
+
+        <Toaster />
+      </WallpaperProvider>
+    </ThemeProvider>
+  );
 }
 
-export default App
+export default App;
