@@ -14,7 +14,10 @@ import {
   applyThemePresetToDocument,
   isValidThemePreset,
   ThemeContext,
+  type Theme,
+  type ThemeContextValue,
 } from "./theme";
+
 
 export type Theme = "light" | "dark";
 
