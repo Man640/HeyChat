@@ -6,27 +6,27 @@ import toast from "react-hot-toast";
 import { axiosInstance } from "../lib/axios";
 import { useAuthStore } from "./useAuthStore";
 
-interface User {
+export interface User {
   _id: string;
-  name?: string;
-  username?: string;
+  fullName: string;
+  email: string;
   profilePic?: string;
   [key: string]: unknown;
 }
 
-interface Conversation {
-  _id: string;
-  [key: string]: unknown;
-}
+// The conversations endpoint returns the peer's user document
+// (via $lookup + $replaceRoot), so it has the same shape as User.
+export type Conversation = User;
 
-interface Message {
+export interface Message {
   _id: string;
   senderId: string;
   receiverId?: string;
   text?: string;
   image?: string;
+  video?: string;
   file?: string;
-  createdAt?: string;
+  createdAt: string;
   [key: string]: unknown;
 }
 

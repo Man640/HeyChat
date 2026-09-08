@@ -1,12 +1,12 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, type CSSProperties } from "react";
 
-import type {
-  Wallpaper,
-} from "../data/wallpaper";
+import type { Wallpaper } from "../data/wallpaper";
 
 export interface WallpaperContextValue {
+  wallpaperId: string;
+  setWallpaperId: (id: string) => void;
   wallpaper: Wallpaper;
-  setWallpaper: (wallpaper: Wallpaper) => void;
+  frameStyle: CSSProperties;
 }
 
 export const WallpaperContext =

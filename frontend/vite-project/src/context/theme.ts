@@ -1,8 +1,4 @@
-import {
-  createContext,
-  useContext,
-  type ReactNode,
-} from "react";
+import { createContext, useContext } from "react";
 
 import {
   DEFAULT_THEME_PRESET_ID,
@@ -10,30 +6,35 @@ import {
   type HeroUIThemePresetId,
 } from "../data/heroui-theme-preset";
 
+export type Theme = "light" | "dark";
+
 export interface ThemeContextValue {
-  themePresetId: HeroUIThemePresetId;
-  setThemePresetId: (presetId: HeroUIThemePresetId) => void;
+  theme: Theme;
+  setTheme: (next: Theme) => void;
+  toggleTheme: () => void;
+  themePreset: HeroUIThemePresetId;
+  setThemePreset: (
+    next:
+      | HeroUIThemePresetId
+      | ((prev: HeroUIThemePresetId) => HeroUIThemePresetId)
+  ) => void;
 }
 
 export const ThemeContext =
   createContext<ThemeContextValue | null>(null);
 
 const PRESET_IDS = new Set<HeroUIThemePresetId>(
-  HERO_UI_THEME_PRESETS.map((preset) => preset.id),
+  HERO_UI_THEME_PRESETS.map((preset) => preset.id)
 );
 
 export function isValidThemePreset(
-  presetId: string,
+  presetId: string
 ): presetId is HeroUIThemePresetId {
   return PRESET_IDS.has(presetId as HeroUIThemePresetId);
 }
 
-/**
- * Apply preset to <html> immediately so `--accent`
- * updates before paint.
- */
 export function applyThemePresetToDocument(
-  presetId: string,
+  presetId: string
 ): void {
   const id: HeroUIThemePresetId = isValidThemePreset(presetId)
     ? presetId
@@ -41,7 +42,7 @@ export function applyThemePresetToDocument(
 
   document.documentElement.setAttribute(
     "data-theme-preset",
-    id,
+    id
   );
 }
 
@@ -50,7 +51,7 @@ export function useTheme(): ThemeContextValue {
 
   if (!ctx) {
     throw new Error(
-      "useTheme must be used within ThemeProvider",
+      "useTheme must be used within ThemeProvider"
     );
   }
 

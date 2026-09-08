@@ -1,23 +1,7 @@
 import { useMediaQuery } from "./useMediaQuery";
 import { formatMessageTime } from "../lib/utils";
-import { useChatStore } from "../store/useChatStore";
+import { useChatStore, type User, type Message } from "../store/useChatStore";
 import { useAuthStore } from "../store/useAuthStore";
-
-interface User {
-  _id: string;
-  fullName: string;
-  email: string;
-  profilePic?: string;
-}
-
-interface Message {
-  _id: string;
-  senderId: string;
-  text?: string;
-  createdAt: string;
-  image?: string;
-  video?: string;
-}
 
 interface AuthUser {
   _id: string;

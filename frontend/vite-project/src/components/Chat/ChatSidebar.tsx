@@ -1,6 +1,6 @@
 import { getInitials, useSelectedConversation } from "../../hooks/useSelectedConversation";
 import { useAuthStore } from "../../store/useAuthStore";
-import { useChatStore } from "../../store/useChatStore";
+import { useChatStore, type User } from "../../store/useChatStore";
 import { APP_NAME, AppLogo } from "../AppLogo";
 import { UserButton } from "@clerk/react";
 
@@ -8,12 +8,6 @@ import { SearchField, Tabs } from "@heroui/react";
 import { MessageSquareIcon, UsersIcon } from "lucide-react";
 import { ConversationRow } from "./ConversationRow";
 import type { ReactNode } from "react";
-
-interface User {
-  _id: string;
-  fullName: string;
-  profilePic?: string | null;
-}
 
 interface ConversationUser {
   conversationId: string;
